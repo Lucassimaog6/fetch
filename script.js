@@ -1,4 +1,4 @@
-const table = document.getElementById('corpo');
+const table = document.getElementById('countries');
 let countries = [];
 
 window.addEventListener('load', () => {
@@ -16,12 +16,13 @@ async function fetchApi() {
 function loadTable(data) {
 	data.forEach((country) => {
 		table.innerHTML += `
-		<tr class="bg-white border-b">
-			<td class="px-6 py-4">${country.name.common}</td>
-			<td class="px-6 py-4">${country.capital}</td>
-			<td class="px-6 py-4">${country.flag}</td>
-			<td class="px-6 py-4"><img class="h-10" src="${country.flags.png}"></td>
-		</tr>
+		<li 
+		class="grid grid-cols-2 gap-4 p-4 rounded-lg shadow-lg"
+		style="background-image: url(${country.flags.png}); background-size: cover; background-position: center; background-repeat: no-repeat;"
+		>
+			<h1>${country.name.common}</h1>
+			<h3>${country.capital}</h3>
+		</li>
 		`;
 	});
 }
