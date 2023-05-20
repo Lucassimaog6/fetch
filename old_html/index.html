@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script defer src="script.js"></script>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<link rel="preload" href="https://restcountries.com">
+	<link rel="preload" href="https://flagcdn.com">
+	<title>Países</title>
+</head>
+
+<body class="bg-zinc-200 grid sm:grid-cols-2 gap-8 p-4">
+	<div class="bg-black/20 p-4 rounded-lg order-last sm:order-first">
+		<h1 id="countries-total" class="text-2xl text-center m-4">Total: </h1>
+		<ul id="countries" class="grid grid-cols-1 lg:grid-cols-2 auto-rows-min gap-4">
+		</ul>
+	</div>
+	
+	<div class="bg-black/20 p-4 rounded-lg">
+		<h1 id="favorites-total" class="text-2xl text-center m-4">Favorito: </h1>
+		<ul id="favorites" class="grid grid-cols-1 lg:grid-cols-2 auto-rows-min gap-4">
+		</ul>
+	</div>
+</body>
+
+</html>
