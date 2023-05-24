@@ -8,34 +8,30 @@ function App() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const response = await fetch(
-				'https://restcountries.com/v3.1/all?fields=name,capital,region,flags,population'
-			);
+			const response = await fetch('./newData.json');
 			const data = await response.json();
+			console.log(data);
 			setCoutry(data);
 		};
 		fetchData();
 	}, []);
 
-	const favoriteCountry = (i) => {
-		const newFavorite = [...favorite, country[i]];
-		setFavorite(newFavorite);
-		const newCountry = [...country];
-		newCountry.splice(i, 1);
-		setCoutry(newCountry);
+	const favoriteCountry = (c) => {
+		setFavorite([...favorite, c]);
+		let newCountries = country.filter((fc) => fc.name !== c.name);
+		setCoutry(newCountries);
 	};
-	const removeFavoriteCountry = (i) => {
-		const newFavorite = [...favorite];
-		newFavorite.splice(i, 1);
+
+	const removeFavoriteCountry = (f) => {
+		setCoutry([...country, favorite]);
+		let newFavorite = favorite.filter((ff) => ff.name !== f.name);
 		setFavorite(newFavorite);
-		const newCountry = [...country, favorite[i]];
-		setCoutry(newCountry);
 	};
 
 	function orderCountry(a, b) {
-		if (a.name.common > b.name.common) {
+		if (a.name > b.name) {
 			return 1;
-		} else if (a.name.common < b.name.common) {
+		} else if (a.name < b.name) {
 			return -1;
 		} else {
 			return 0;
@@ -45,7 +41,7 @@ function App() {
 	function filterCountry(country) {
 		if (search === '') {
 			return country;
-		} else if (country.name.common.toLowerCase().includes(search.toLowerCase())) {
+		} else if (country.name.toLowerCase().includes(search.toLowerCase())) {
 			return country;
 		}
 	}
@@ -155,16 +151,16 @@ function App() {
 						.sort(orderCountry)
 						.map((country, i) => (
 							<li
-								key={country.name.common}
+								key={country.name}
 								className='p-4 overflow-hidden rounded-lg shadow-lg grid grid-cols-[1fr_auto] items-center aspect-video relative'
 							>
 								<img
 									className='absolute -z-10 object-cover w-full h-full brightness-50'
-									src={country.flags.svg}
+									src={country.flag}
 								/>
 								<div className='text-white w-fit p-4 rounded-lg'>
 									<p className='text-lg capitalize [text-shadow:_2px_2px_5px_rgb(0_0_0_/_100%)]'>
-										Nome: {country.name.common}
+										Nome: {country.name}
 									</p>
 									<p className='text-lg capitalize [text-shadow:_2px_2px_5px_rgb(0_0_0_/_100%)]'>
 										Capital: {country.capital}
@@ -174,7 +170,7 @@ function App() {
 									</p>
 								</div>
 								<button
-									onClick={() => favoriteCountry(i)}
+									onClick={() => favoriteCountry(country)}
 									className='self-end '
 								>
 									<svg
@@ -199,16 +195,16 @@ function App() {
 						.sort(orderCountry)
 						.map((favorite, i) => (
 							<li
-								key={favorite.name.common}
+								key={favorite.name}
 								className='p-4 overflow-hidden rounded-lg shadow-lg grid grid-cols-[1fr_auto] items-center aspect-video relative'
 							>
 								<img
 									className='absolute -z-10 object-cover w-full h-full brightness-50'
-									src={favorite.flags.svg}
+									src={favorite.flag}
 								/>
 								<div className='text-white w-fit p-4 rounded-lg'>
 									<p className='text-lg capitalize [text-shadow:_2px_2px_5px_rgb(0_0_0_/_100%)]'>
-										Nome: {favorite.name.common}
+										Nome: {favorite.name}
 									</p>
 									<p className='text-lg capitalize [text-shadow:_2px_2px_5px_rgb(0_0_0_/_100%)]'>
 										Capital: {favorite.capital}
@@ -218,7 +214,7 @@ function App() {
 									</p>
 								</div>
 								<button
-									onClick={() => removeFavoriteCountry(i)}
+									onClick={() => removeFavoriteCountry(favorite)}
 									className='self-end '
 								>
 									<svg
